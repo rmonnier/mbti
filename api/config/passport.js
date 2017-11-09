@@ -14,9 +14,7 @@ const passportConfig = (passport) => {
 
   passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
     User.findOne({ email: email.toLowerCase() }, (err, user) => {
-      if (err) {
-        return done(err);
-      }
+      if (err) { return done(err); }
       if (!user) {
         return done(null, false, [{ param: 'email', msg: 'error.noEmailUsed', value: email }]);
       }
@@ -24,10 +22,8 @@ const passportConfig = (passport) => {
         return done(null, false, [{ param: 'password', msg: 'error.noPassword' }]);
       }
       user.comparePassword(password, (err, isMatch) => {
-        if (err) return done(err);
-        if (isMatch) {
-          return done(null, user);
-        }
+        if (err) { return done(err); }
+        if (isMatch) { return done(null, user); }
         return done(null, false, [{ param: 'password', msg: 'error.incorrectPassword' }]);
       });
     });
@@ -43,9 +39,7 @@ const passportConfig = (passport) => {
 
   passport.use(new JwtStrategy(opts, (jwtPayload, done) => {
     User.findById(jwtPayload._id, (err, user) => {
-      if (err) {
-        return done(err, false);
-      }
+      if (err) { return done(err, false); }
       if (user) { return done(null, user); }
       return done(null, false);
     });
@@ -74,7 +68,6 @@ const passportConfig = (passport) => {
   passport.use('facebook', new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: '/oauth/facebook/callback',
     profileFields: ['id', 'displayName', 'picture.type(large)', 'email'],
   }, (accessToken, refreshToken, profile, done) => {
     User.findOne({ facebookId: profile.id }, (err, existingUser) => {
@@ -116,9 +109,8 @@ const passportConfig = (passport) => {
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_ID,
     clientSecret: process.env.GOOGLE_SECRET,
-    callbackURL: '/oauth/google/callback',
-    passReqToCallback: true
-  }, (req, accessToken, refreshToken, profile, done) => {
+    scope: 'profile email',
+  }, (accessToken, refreshToken, profile, done) => {
     User.findOne({ google: profile.id }, (err, existingUser) => {
       if (err) { return done(err); }
       if (existingUser) return done(null, existingUser);
@@ -153,9 +145,8 @@ const passportConfig = (passport) => {
   passport.use(new LinkedInStrategy({
     clientID: process.env.LINKEDIN_ID,
     clientSecret: process.env.LINKEDIN_SECRET,
-    callbackURL: '/oauth',
     scope: ['r_emailaddress', 'r_basicprofile'],
-  }, (req, accessToken, refreshToken, profile, done) => {
+  }, (accessToken, refreshToken, profile, done) => {
     User.findOne({ linkedin: profile.id }, (err, existingUser) => {
       if (err) { return done(err); }
       if (existingUser) return done(null, existingUser);

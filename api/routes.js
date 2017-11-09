@@ -6,11 +6,17 @@ const routes = async (app, passport) => {
    * Authentication routes. (Sign in)
    */
   app.post('/api/signin', authentication.local);
-  app.get('/api/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+  app.get('/api/auth/facebook', (req, res) => {
+    passport.authenticate('facebook', { callbackURL: req.headers.referer })(req, res);
+  });
   app.get('/api/auth/facebook/callback', authentication.facebook);
-  app.get('/api/auth/google', passport.authenticate('google', { scope: 'profile email' }));
+  app.get('/api/auth/google', (req, res) => {
+    passport.authenticate('google', { callbackURL: req.headers.referer })(req, res);
+  });
   app.get('/api/auth/google/callback', authentication.google);
-  app.get('/api/auth/linkedin', passport.authenticate('linkedin'));
+  app.get('/api/auth/linkedin', (req, res) => {
+    passport.authenticate('linkedin', { callbackURL: req.headers.referer })(req, res);
+  });
   app.get('/api/auth/linkedin/callback', authentication.linkedin);
   app.use('/oauth', (req, res) => {
     res.end();

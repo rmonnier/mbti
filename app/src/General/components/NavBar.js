@@ -16,7 +16,7 @@ class NavBar extends Component {
     let signOut = <span className="glyphicon glyphicon-off off" />;
     if (isAuthenticated) {
       profileNav = <Link to="/myprofile">{ myProfile }</Link>;
-      galleryNav = <Link to="/">{ gallery }</Link>;
+      galleryNav = <Link to="/">MBTI Test</Link>;
       signOut = <button onClick={this.props.handleSignOut} className="glyphicon glyphicon-off" />;
     }
 
@@ -32,9 +32,9 @@ class NavBar extends Component {
             <li className="nav-link">
               {profileNav}
             </li>
-            {/* <li className="nav-link">
+            <li className="nav-link">
               {galleryNav}
-            </li> */}
+            </li>
           </ul>
           <ul className="nav navbar-nav navbar-right">
             {locale === 'en-en' &&

@@ -49,10 +49,7 @@ const SigninComponent = (props) => {
           onSubmit={props.handleSubmit}
           onChange={props.handleChange}
         >
-          <h2 className="homepage-title">
-            {welcome}
-            <span className="homepage-hypertube-title"> Hypertube</span>
-          </h2>
+          <h2 className="homepage-title">MBTI Test. Improved.</h2>
           <TextField
             hintText={yourEmail}
             name="email"
