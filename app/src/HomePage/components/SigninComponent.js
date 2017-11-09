@@ -49,7 +49,7 @@ const SigninComponent = (props) => {
           onSubmit={props.handleSubmit}
           onChange={props.handleChange}
         >
-          <h2 className="homepage-title">MBTI Test. Improved.</h2>
+          <h2 className="homepage-title">mbti test.</h2>
           <TextField
             hintText={yourEmail}
             name="email"

@@ -7,7 +7,6 @@ import openPopup from './popup';
 
 import { loginUser } from '../../actions/authAction';
 import SigninComponent from '../components/SigninComponent.js';
-// import '../css/homepage.css';
 
 export default connect(
   ({ auth: { isAuthenticated, message } }) => ({

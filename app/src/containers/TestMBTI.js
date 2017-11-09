@@ -27,7 +27,6 @@ class TestMBTI extends Component {
         this.setState({ error });
       } else {
         const { answers, typeMBTI } = user.profile;
-        console.log(user);
         this.setState({
           answers,
           typeMBTI,

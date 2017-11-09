@@ -4,7 +4,6 @@ import axios from 'axios';
 import SignupComponent from '../components/SignupComponent.js';
 
 import { loginUser } from '../../actions/authAction';
-import '../css/homepage.css';
 
 class Signup extends Component {
 
