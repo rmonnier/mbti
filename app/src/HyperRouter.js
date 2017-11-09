@@ -18,7 +18,7 @@ import TestMBTI from './containers/TestMBTI';
 
 const MatchaRouter = ({ isAuthenticated, locale }) => (
   <Router>
-    <div>
+    <div className="site-wrapper">
       <Header key={locale} />
       <Switch>
         <PrivateRoute exact path="/" key={locale} isAuthenticated={isAuthenticated} component={TestMBTI} />

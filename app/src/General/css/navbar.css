@@ -3,10 +3,11 @@
 }*/
 
 .navbar {
+  background-color: rgb(147, 148, 140);
   border-radius: 0;
   border-bottom: 1px solid #D8D8D8;
   margin-bottom: 15px;
-  font-size: 1.6rem;
+  font-size: 14.4px;
   padding-top: 10px;
 }
 
@@ -36,7 +37,6 @@ span.glyphicon-off.off {
 }
 
 .nav > li > a:hover, .nav > li > a:focus {
-  background-color: transparent;
   text-shadow: none;
 }
 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import LinearProgress from 'material-ui/LinearProgress';
 import { connect } from 'react-redux';
 import * as mbtiTest from '../tools/mbtiTest';
+import './TestMBTI.css';
 
 class TestMBTI extends Component {
 
@@ -14,7 +15,26 @@ class TestMBTI extends Component {
       answers: [],
       error: [{ param: '', msg: '' }],
       typeMBTI: '',
+      profileLoaded: false,
     };
+  }
+
+  componentDidMount() {
+    const url = '/api/me';
+    axios({ url, method: 'GET' })
+    .then(({ data: { error, user } }) => {
+      if (error.length) {
+        this.setState({ error });
+      } else {
+        const { answers, typeMBTI } = user.profile;
+        console.log(user);
+        this.setState({
+          answers,
+          typeMBTI,
+          profileLoaded: true,
+        });
+      }
+    });
   }
 
   onChange = (e) => {
@@ -22,12 +42,13 @@ class TestMBTI extends Component {
     const answers = [...this.state.answers, parseInt(e.currentTarget.value, 10)];
     const step = this.state.step + 1;
     const completed = Math.floor((step / 70) * 100);
-    let { typeMBTI } = this.state;
-    if (typeMBTI === '' && step >= 70) {
-      typeMBTI = this.computeResult(answers);
+    if (step >= 70) {
+      const typeMBTI = this.computeResult(answers);
       this.postResult(answers, typeMBTI);
+      this.setState({ answers, step: 0, completed, typeMBTI });
+    } else {
+      this.setState({ answers, step, completed });
     }
-    this.setState({ answers, step, completed, typeMBTI });
   }
 
   computeLetter = (array, answers) => {
@@ -79,6 +100,7 @@ class TestMBTI extends Component {
       step,
       error,
       typeMBTI,
+      profileLoaded,
     } = this.state;
 
     const question = mbtiTest.questions[step];
@@ -86,12 +108,12 @@ class TestMBTI extends Component {
 
     return (
       // <div style={{ color: 'hsla(215, 5%, 50%, 1)' }}>
-      <div className="test-form">
+      <div className="mbtiTest">
         <h1>Test MBTI</h1>
-        {typeMBTI !== '' &&
+        {profileLoaded && typeMBTI &&
           <h2>You are {typeMBTI}</h2>
         }
-        {step <= 69 &&
+        {step <= 69 && profileLoaded && !typeMBTI &&
           <div>
             <h2>{question.q}</h2>
             <section>
@@ -108,8 +130,10 @@ class TestMBTI extends Component {
                 </label>
               </div>
             </section>
-            <h3>{this.state.completed}% completed</h3>
-            <LinearProgress mode="determinate" value={this.state.completed} />
+            <div>
+              <LinearProgress mode="determinate" value={this.state.completed} />
+              <h3>{this.state.completed}%</h3>
+            </div>
             <div className="infos-error">{errorMessage}</div>
           </div>
         }

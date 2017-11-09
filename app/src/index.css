@@ -1,80 +1,201 @@
-// test-form for tests
-.test-form {
-  padding: 1rem;
-  color: hsla(215, 5%, 50%, 1);
+@media screen and (max-width: 780px){
+  .dropzone-container { flex-direction: column; }
+  .homepage-container { margin-top: 5vh !important; }
 }
-.test-form h1 {
-  color: hsla(215, 5%, 10%, 1);
-  margin-bottom: 2rem;
+@media screen and (max-width: 500px){
+  .homepage-container { width: 300px !important; margin-top: 5vh !important; }
 }
-.test-form section {
-  display: flex;
-  flex-flow: row wrap;
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
-.test-form section > div {
-  flex: 1;
-  padding: 0.5rem;
-}
-.test-form input[type="radio"] {
-  display: none;
-  &:not(:disabled) ~ label {
-    cursor: pointer;
-  }
-  &:disabled ~ label {
-    color: hsla(150, 5%, 75%, 1);
-    border-color: hsla(150, 5%, 75%, 1);
-    box-shadow: none;
-    cursor: not-allowed;
-  }
-}
-.test-form label {
-  height: 100%;
-  display: block;
-  background: white;
-  border: 2px solid hsla(150, 75%, 50%, 1);
-  border-radius: 20px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  //margin: 1rem;
-  text-align: center;
-  box-shadow: 0px 3px 10px -2px hsla(150, 5%, 65%, 0.5);
+
+body {
+  background-color: rgb(255, 255, 255);
+  color: rgb(76, 76, 76);
+  font-family: "Open Sans", "Helvetica Neue", Arial;
   position: relative;
+  padding-bottom: 60px;
+  min-height: 100%;
 }
-.test-form input[type="radio"]:checked + label {
-  background: hsla(150, 75%, 50%, 1);
-  color: hsla(215, 0%, 100%, 1);
-  box-shadow: 0px 0px 20px hsla(150, 100%, 50%, 0.75);
-  &::after {
-    color: hsla(215, 5%, 25%, 1);
-    font-family: FontAwesome;
-    border: 2px solid hsla(150, 75%, 45%, 1);
-    content: "\f00c";
-    font-size: 24px;
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 50px;
-    width: 50px;
-    line-height: 50px;
-    text-align: center;
-    border-radius: 50%;
-    background: white;
-    box-shadow: 0px 2px 5px -2px hsla(0, 0%, 0%, 0.25);
-  }
+
+footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  text-align: center;
+  animation: fadein 15s;
 }
-.test-form input[type="radio"]#control_05:checked + label {
-  background: red;
-  border-color: red;
+
+span.fa-github {
+  color: #F5F5F5;
+  font-size: 1.6em;
 }
-.test-form p {
-  font-weight: 900;
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
-.test-form h2 {
-  color: rgb(121, 126, 134);
+
+.homepage-container {
+  margin: auto;
+  margin-top: 15vh;
+  margin-bottom: 10vh;
+  width: 450px;
+  padding: 10px 25px 25px 25px;
+  border-style: solid;
+  border-width: 2px;
+  background-color: #F5F5F5;
+  border-color: green;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: rgb(76, 76, 76);
+  animation: fadein 1s;
+  border-radius: 3%;
 }
-.test-form @media only screen and (max-width: 700px) {
-  section {
-    flex-direction: column;
-  }
+
+.homepage-background {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-size: cover;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.homepage-submit {
+  margin: 10px;
+  border-radius: 10px;
+}
+
+ul.social-icons {
+  padding: 0;
+  list-style: none;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+.social-icons li {
+  vertical-align: top;
+  display: inline;
+  height: 100px;
+  color: whitesmoke;
+  margin: 2px;
+  font-size: 1.4em;
+}
+
+.fa-facebook {
+  padding: 10px 14.5px;
+  transition: .5s;
+  background-color: #322f30;
+}
+
+.fa-facebook:hover {
+  background-color: #3d5b99;
+}
+
+.fa-linkedin {
+  padding: 10px 12px;
+  transition: .5s;
+  background-color: #322f30;
+}
+.fa-linkedin:hover {
+  background-color: #0073a4;
+}
+
+.fa-google {
+  padding: 10px 12px;
+  transition: .5s;
+  background-color: #322f30;
+}
+
+.fa-google:hover {
+  background-color: #e25714;
+}
+
+.logo-42 {
+  height: 39px;
+  width: 40.8px;
+  padding: 9px 7px;
+  transition: .5s;
+  margin-top: -2px;
+  background-color: #322f30;
+}
+
+.logo-42:hover {
+  background-color: #00babc;
+}
+
+.fa-google:hover {
+  background-color: #e25714;
+}
+
+.social-icon > .fa-github {
+  padding: 10px 12px;
+  transition: .5s;
+  background-color: #322f30;
+}
+.social-icon > .fa-github:hover {
+  background-color: black;
+}
+
+a.homepage-linkto {
+  color: #101010;
+}
+
+a.homepage-linkto:hover {
+  color: #101010;
+  text-decoration: underline;
+  text-decoration-color: green;
+}
+
+h2.homepage-title {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.7em;
+  border-bottom: green 2px solid;
+  padding-bottom: 20px;
+}
+
+.homepage-hypertube-title {
+  color: green;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.picture-preview {
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+}
+
+.signup-camera-icon {
+  font-size: 48px;
+}
+
+.dropzone-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropzone {
+  margin: 20px;
+  border-style: solid;
+  border-width: medium;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
