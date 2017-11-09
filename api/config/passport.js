@@ -2,6 +2,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 
 const User = require('../models/User');
@@ -109,6 +110,46 @@ const passportConfig = (passport) => {
     });
   }));
 
+  /**
+   * Sign in with Google.
+   */
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_ID,
+    clientSecret: process.env.GOOGLE_SECRET,
+    callbackURL: '/oauth/google/callback',
+    passReqToCallback: true
+  }, (req, accessToken, refreshToken, profile, done) => {
+    User.findOne({ google: profile.id }, (err, existingUser) => {
+      if (err) { return done(err); }
+      if (existingUser) return done(null, existingUser);
+      User.findOne({ email: profile.emails[0].value }, (err, existingEmailUser) => {
+        if (err) return done(err);
+        if (existingEmailUser) {
+          existingEmailUser.google = profile.id;
+          existingEmailUser.tokens.push({ kind: 'google', accessToken });
+          existingEmailUser.save((err) => {
+            done(err, existingEmailUser);
+          });
+        } else {
+          const user = new User();
+          user.email = profile.emails[0].value;
+          user.google = profile.id;
+          user.tokens.push({ kind: 'google', accessToken });
+          user.profile.firstName = profile.name.givenName;
+          user.profile.lastName = profile.name.familyName;
+          user.profile.gender = profile._json.gender;
+          user.profile.pictureURL = profile._json.image.url;
+          user.save((err) => {
+            done(err, user);
+          });
+        }
+      });
+    });
+  }));
+
+  /**
+   * Sign in with Linkedin.
+   */
   passport.use(new LinkedInStrategy({
     clientID: process.env.LINKEDIN_ID,
     clientSecret: process.env.LINKEDIN_SECRET,

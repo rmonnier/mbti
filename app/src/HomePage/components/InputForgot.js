@@ -1,26 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import messages from './../../messages';
 
 const InputForgot = (props) => {
   const error = {};
   props.error.forEach((field) => {
     if (field.msg) {
-      error[field.param] = messages[field.msg];
+      error[field.param] = props.intl.formatMessage({ id: field.msg });
     }
   });
 
   const { success } = props;
-  const confirmForgotPassword = success ? messages['homepage.confirmForgotPassword'] : '';
+  const confirmForgotPassword = success ? props.intl.formatMessage({ id: 'homepage.confirmForgotPassword' }) : '';
 
-  const forgotPassword = messages['homepage.forgotPassword'];
-  const yourEmail = messages['homepage.yourEmail'];
-  const email = messages['homepage.email'];
-  const nevermind = messages['homepage.nevermind'];
-  const send = messages['general.send'];
+  const forgotPassword = props.intl.formatMessage({ id: 'homepage.forgotPassword' });
+  const yourEmail = props.intl.formatMessage({ id: 'homepage.yourEmail' });
+  const email = props.intl.formatMessage({ id: 'homepage.email' });
+  const nevermind = props.intl.formatMessage({ id: 'homepage.nevermind' });
+  const send = props.intl.formatMessage({ id: 'general.send' });
 
   return (
     <div>
@@ -49,4 +49,4 @@ const InputForgot = (props) => {
   );
 };
 
-export default InputForgot;
+export default injectIntl(InputForgot);

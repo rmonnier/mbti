@@ -1,27 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import messages from './../../messages';
 
 const InputReset = (props) => {
   const error = {};
   props.error.forEach((field) => {
     if (field.msg) {
-      error[field.param] = messages[field.msg];
+      error[field.param] = props.intl.formatMessage({ id: field.msg });
     }
   });
 
   const { success } = props;
-  const confirmResetPassword = success ? messages['homepage.confirmResetPassword'] : '';
+  const confirmResetPassword = success ? props.intl.formatMessage({ id: 'homepage.confirmResetPassword' }) : '';
 
-  const changePassword = messages['homepage.changePassword'];
-  const confirmPassword = messages['homepage.confirmPassword'];
-  const password = messages['homepage.password'];
-  const yourPassword = messages['homepage.yourPassword'];
-  const logIn = messages['homepage.logIn'];
-  const send = messages['general.send'];
+  const changePassword = props.intl.formatMessage({ id: 'homepage.changePassword' });
+  const confirmPassword = props.intl.formatMessage({ id: 'homepage.confirmPassword' });
+  const password = props.intl.formatMessage({ id: 'homepage.password' });
+  const yourPassword = props.intl.formatMessage({ id: 'homepage.yourPassword' });
+  const logIn = props.intl.formatMessage({ id: 'homepage.logIn' });
+  const send = props.intl.formatMessage({ id: 'general.send' });
 
   return (
     <div>
@@ -60,4 +60,4 @@ const InputReset = (props) => {
   );
 };
 
-export default InputReset;
+export default injectIntl(InputReset);

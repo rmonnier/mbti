@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import messages from './../../messages';
+import { injectIntl } from 'react-intl';
 
 class TextInput extends Component {
 
@@ -21,7 +21,7 @@ class TextInput extends Component {
     const label = !id ? '' : this.props.intl.formatMessage({ id });
 
     const placeholder = this.props.placeholder || '';
-    const placeholderValue = !placeholder ? '' : messages[placeholder];
+    const placeholderValue = !placeholder ? '' : this.props.intl.formatMessage({ id: placeholder });
 
     return (
       <div className="">
@@ -41,4 +41,4 @@ class TextInput extends Component {
   }
 }
 
-export default TextInput;
+export default injectIntl(TextInput);

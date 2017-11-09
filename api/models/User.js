@@ -26,6 +26,8 @@ const userSchema = new mongoose.Schema({
     picture: String,
     pictureURL: String,
     movies: [String],
+    answers: Array,
+    typeMBTI: String,
   }
 }, { timestamps: true });
 

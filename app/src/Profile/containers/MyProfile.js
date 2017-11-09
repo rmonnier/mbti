@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { injectIntl } from 'react-intl';
 import UpdateMyInfos from './UpdateMyInfos.js';
 import FindUser from './FindUser.js';
 import ProfilePic from '../components/ProfilePic.js';
 import Loading from '../../General/components/Loading';
-import messages from './../../messages';
 import '../css/profile.css';
 
 class MyProfile extends Component {
@@ -80,7 +80,7 @@ class MyProfile extends Component {
       file,
     } = this.state;
 
-    const profile = messages['profile.profile'];
+    const profile = this.props.intl.formatMessage({ id: 'profile.profile' });
 
     if (error.length) { return (<div>{error}</div>); } // no error backend
     if (!profileLoaded) { return <Loading />; }
@@ -110,4 +110,4 @@ class MyProfile extends Component {
 
 }
 
-export default MyProfile;
+export default injectIntl(MyProfile);

@@ -1,7 +1,10 @@
 {
   "name": "mbti",
-  "version": "1.0",
   "description": "MBTI infos collector.",
+  "version": "1.0.0",
+  "engines": {
+    "node": "8.6.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/rmonnier/mbti"
@@ -33,6 +36,7 @@
     "nodemon": "^1.11.0",
     "passport": "0.4.0",
     "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^1.0.0",
     "passport-jwt": "^3.0.0",
     "passport-linkedin-oauth2": "^1.5.0",
     "passport-local": "^1.0.0",

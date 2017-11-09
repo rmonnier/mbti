@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { injectIntl } from 'react-intl';
 import Loading from '../../General/components/Loading';
-import messages from './../../messages';
+import Card from '../../Gallery/components/Card';
 import '../css/profile.css';
 
 const DEFAULT_IMG = '/static/uploads/empty_profile.png';
@@ -36,7 +37,7 @@ class OneProfile extends Component {
     } = this.state;
 
     const errorMessage = error[0].msg
-      ? messages[error[0].msg]
+      ? this.props.intl.formatMessage({ id: error[0].msg })
       : '';
     if (error[0].msg) {
       return <div className="one-user-profile-error">{errorMessage}</div>;
@@ -46,7 +47,33 @@ class OneProfile extends Component {
 
     const { firstName, lastName, pictureURL } = this.user.profile;
 
-    const profile = messages['profile.profile'];
+    const profile = this.props.intl.formatMessage({ id: 'profile.profile' });
+    const movieSeen = this.props.intl.formatMessage({ id: 'profile.movieSeen' });
+    const comments = this.props.intl.formatMessage({ id: 'comments.comments' });
+
+    let Cards = '';
+    if (this.movies.length !== 0) {
+      Cards =
+      (<div className="one-profile-movies">
+        <div className="one-profile-seen">{movieSeen}<span className="glyphicon glyphicon-ok movie-seen" /></div>
+        <div className="movie-list-container movie-list-container-profile">
+          {this.movies
+          .filter(movie => movie.idImdb)
+          .map(movie => <Card key={movie.idImdb} movie={movie} user={this.user} />)}
+        </div>
+      </div>);
+    }
+
+    let Comments = '';
+    if (this.comments.length !== 0) {
+      Comments =
+      (<div className="profile-container comment-box">
+        <div className="one-profile-seen">
+          <i className="glyphicon glyphicon-comment comment-icon" />
+          {comments}
+        </div>
+      </div>);
+    }
 
     return (
       <div className="one-profile-container">
@@ -66,11 +93,13 @@ class OneProfile extends Component {
               <span>{firstName} {lastName}</span>
             </div>
           </div>
+          {Comments}
         </div>
+        {Cards}
       </div>
     );
   }
 
 }
 
-export default OneProfile;
+export default injectIntl(OneProfile);

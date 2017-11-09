@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
-import messages from './../../messages';
+import { injectIntl } from 'react-intl';
 import TextInput from '../../General/components/TextInput.js';
 
 const DEFAULT_IMG = '/static/uploads/empty_profile.png';
@@ -59,7 +59,7 @@ class FindUser extends Component {
 
   render() {
     const { error, users } = this.state;
-    const errorMessage = error[0].msg ? messages[error[0].msg] : '';
+    const errorMessage = error[0].msg ? this.props.intl.formatMessage({ id: error[0].msg }) : '';
     const search = this.state.userName;
 
     let usersDisplay = '';
@@ -102,4 +102,4 @@ class FindUser extends Component {
   }
 }
 
-export default FindUser;
+export default injectIntl(FindUser);

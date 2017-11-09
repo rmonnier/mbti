@@ -8,6 +8,8 @@ const routes = async (app, passport) => {
   app.post('/api/signin', authentication.local);
   app.get('/api/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
   app.get('/api/auth/facebook/callback', authentication.facebook);
+  app.get('/api/auth/google', passport.authenticate('google', { scope: 'profile email' }));
+  app.get('/api/auth/google/callback', authentication.google);
   app.get('/api/auth/linkedin', passport.authenticate('linkedin'));
   app.get('/api/auth/linkedin/callback', authentication.linkedin);
   app.use('/oauth', (req, res) => {

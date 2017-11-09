@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import messages from './../../messages';
+import { injectIntl } from 'react-intl';
 import FormClass from './FormClass';
 
 class MyInfosForms extends Component {
@@ -71,7 +71,7 @@ class MyInfosForms extends Component {
     const lastName = change.lastName !== '' ? change.lastName : user.profile.lastName;
 
     const login = user.profile.login || '';
-    const logIn = login ? this.messages['homepage.login'] : '';
+    const logIn = login ? this.props.intl.formatMessage({ id: 'homepage.login' }) : '';
 
     const displayForm = form.formId === null ? null : (
       <div className="infos-form top">
@@ -83,11 +83,11 @@ class MyInfosForms extends Component {
       </div>
     );
 
-    const changePassword = this.messages['profile.changePassword'];
-    const name = this.messages['profile.name'];
+    const changePassword = this.props.intl.formatMessage({ id: 'profile.changePassword' });
+    const name = this.props.intl.formatMessage({ id: 'profile.name' });
 
-    const contact = this.messages['profile.contact'];
-    const errorMessage = error[0].msg ? this.messages[error[0].msg] : '';
+    const contact = this.props.intl.formatMessage({ id: 'profile.contact' });
+    const errorMessage = error[0].msg ? this.props.intl.formatMessage({ id: error[0].msg }) : '';
 
     return (
       <div className="infos-container">
@@ -124,4 +124,4 @@ class MyInfosForms extends Component {
   }
 }
 
-export default MyInfosForms;
+export default injectIntl(MyInfosForms);

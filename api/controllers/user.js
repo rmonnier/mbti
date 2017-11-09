@@ -131,6 +131,31 @@ exports.postUpdateProfile = async (req, res, next) => {
 
       break;
     }
+
+    case 'result-form': {
+      const error = await checkReq(req);
+
+      if (error.length) {
+        return res.send({ error });
+      }
+
+      User.findById(req.user.id, (err, user) => {
+        if (err) { return next(err); }
+        if (typeof req.body.answers === typeof [] &&  req.body.answers.length !== 0) {
+          user.profile.answers = req.body.answers;
+        }
+        if (typeof req.body.typeMBTI === typeof '' &&  req.body.typeMBTI !== '') {
+          user.profile.typeMBTI = req.body.typeMBTI;
+        }
+        user.save((err) => {
+          if (err) { return next(err); }
+          user.password = '';
+          return res.send({ error: [], user });
+        });
+      });
+      break;
+    }
+
     default:
       res.status(401).send({ error: [{ param: 'invalid', msg: 'error.invalid', value: req.body.email }] });
   }

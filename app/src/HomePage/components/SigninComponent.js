@@ -1,20 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import messages from './../../messages';
 
 const SigninComponent = (props) => {
   const error = {};
   props.error.forEach((field) => {
     if (field.msg) {
-      error[field.param] = messages[field.msg];
+      error[field.param] = props.intl.formatMessage({ id: field.msg });
     }
   });
 
   const social = [
     { type: 'facebook', class: 'fa fa-facebook' },
+    { type: 'google', class: 'fa fa-google' },
     { type: 'linkedin', class: 'fa fa-linkedin' },
   ];
 
@@ -31,14 +32,14 @@ const SigninComponent = (props) => {
     </li>
   ));
 
-  const welcome = messages['homepage.welcomeTo'];
-  const yourEmail = messages['homepage.yourEmail'];
-  const email = messages['homepage.email'];
-  const yourPassword = messages['homepage.yourPassword'];
-  const password = messages['homepage.password'];
-  const forgot = messages['homepage.forgotPasswordLink'];
-  const signUp = messages['homepage.signUpLink'];
-  const enter = messages['general.enter'];
+  const welcome = props.intl.formatMessage({ id: 'homepage.welcomeTo' });
+  const yourEmail = props.intl.formatMessage({ id: 'homepage.yourEmail' });
+  const email = props.intl.formatMessage({ id: 'homepage.email' });
+  const yourPassword = props.intl.formatMessage({ id: 'homepage.yourPassword' });
+  const password = props.intl.formatMessage({ id: 'homepage.password' });
+  const forgot = props.intl.formatMessage({ id: 'homepage.forgotPasswordLink' });
+  const signUp = props.intl.formatMessage({ id: 'homepage.signUpLink' });
+  const enter = props.intl.formatMessage({ id: 'general.enter' });
 
   return (
     <div>
@@ -50,6 +51,7 @@ const SigninComponent = (props) => {
         >
           <h2 className="homepage-title">
             {welcome}
+            <span className="homepage-hypertube-title"> Hypertube</span>
           </h2>
           <TextField
             hintText={yourEmail}
@@ -88,4 +90,4 @@ SigninComponent.PropTypes = {
   handleOAuth: PropTypes.func.required,
 };
 
-export default SigninComponent;
+export default injectIntl(SigninComponent);

@@ -16,10 +16,33 @@ class Signup extends Component {
     lastName: '',
     login: '',
     error: [{ param: '', msg: '' }],
+    errorPic: [{ param: '', msg: '' }],
+    status: 'closed',
+    file: {},
   }
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value, error: [{ param: '', msg: '' }] });
+  }
+
+  imageUpload = (file) => { this.setState({ file }); }
+
+  handleNextStep = (e) => {
+    e.preventDefault();
+    this.setState({ status: 'open' });
+  }
+
+  sendPicture = (file) => {
+    const form = new FormData();
+    form.append('imageUploaded', file);
+    const headers = { 'Content-Type': 'multipart/form-data', email: this.state.email };
+    const config = {
+      url: '/api/signup/upload',
+      method: 'POST',
+      data: form,
+      headers,
+    };
+    return axios(config);
   }
 
   sendInfo = (data) => {
@@ -44,14 +67,20 @@ class Signup extends Component {
     };
     this.sendInfo(data)
       .then(({ data: { error } }) => {
-        if (error.length) {
-          this.setState({ status: 'closed', error });
-        } else {
-          this.props.dispatch(loginUser({
-            email,
-            password,
-          }));
-          this.props.history.push('/');
+        if (error.length) this.setState({ status: 'closed', error });
+        else {
+          this.sendPicture(file)
+            .then(({ data: { errorPic } }) => {
+              if (errorPic.length) this.setState({ status: 'open', errorPic });
+              else {
+                this.setState({ status: 'closed' });
+                this.props.dispatch(loginUser({
+                  email,
+                  password,
+                }));
+                this.props.history.push('/');
+              }
+            });
         }
       });
   }
@@ -62,6 +91,11 @@ class Signup extends Component {
         handleSubmit={this.handleSubmit}
         handleChange={this.handleChange}
         error={this.state.error}
+        status={this.state.status}
+        file={this.state.file}
+        handleUpload={this.imageUpload}
+        handleNextStep={this.handleNextStep}
+        errorPic={this.state.errorPic}
       />
     );
   }

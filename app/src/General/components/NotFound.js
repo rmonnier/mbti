@@ -1,9 +1,9 @@
 import React from 'react';
-import messages from './../../messages';
+import { injectIntl } from 'react-intl';
 
-const NotFound = () => {
-  const pageNotFound = messages['general.pageNotFound'];
-  const noPage = messages['general.noPage'];
+const NotFound = (props) => {
+  const pageNotFound = props.intl.formatMessage({ id: 'general.pageNotFound' });
+  const noPage = props.intl.formatMessage({ id: 'general.noPage' });
 
   return (
     <div className="not-found">
@@ -13,4 +13,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default injectIntl(NotFound);

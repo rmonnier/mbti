@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import messages from './../../messages';
+import { injectIntl } from 'react-intl';
 
 class SubmitForm extends Component {
+
   render() {
     const { className, id } = this.props;
-    const value = messages[id];
+    const value = this.props.intl.formatMessage({ id });
     return (
       <input
         type="submit"
@@ -15,4 +16,4 @@ class SubmitForm extends Component {
   }
 }
 
-export default SubmitForm;
+export default injectIntl(SubmitForm);

@@ -1,32 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import messages from './../../messages';
+import Dialog from './Dialog.js';
 
 const SignupComponent = (props) => {
   const error = {};
   props.error.forEach((field) => {
     if (field.msg) {
-      error[field.param] = messages[field.msg];
+      error[field.param] = props.intl.formatMessage({ id: field.msg });
     }
   });
 
-  const signUp = messages['homepage.signUp'];
-  const yourEmail = messages['homepage.yourEmail'];
-  const email = messages['homepage.email'];
-  const yourLogin = messages['homepage.yourLogin'];
-  const login = messages['homepage.login'];
-  const yourPassword = messages['homepage.yourPassword'];
-  const password = messages['homepage.password'];
-  const confirmPassword = messages['homepage.confirmPassword'];
-  const yourFirstName = messages['homepage.yourFirstName'];
-  const firstName = messages['profile.firstName'];
-  const lastName = messages['profile.lastName'];
-  const yourLastName = messages['homepage.yourLastName'];
-  const alreadyMember = messages['homepage.alreadyMember'];
-  const next = messages['general.next'];
+  const signUp = props.intl.formatMessage({ id: 'homepage.signUp' });
+  const yourEmail = props.intl.formatMessage({ id: 'homepage.yourEmail' });
+  const email = props.intl.formatMessage({ id: 'homepage.email' });
+  const yourLogin = props.intl.formatMessage({ id: 'homepage.yourLogin' });
+  const login = props.intl.formatMessage({ id: 'homepage.login' });
+  const yourPassword = props.intl.formatMessage({ id: 'homepage.yourPassword' });
+  const password = props.intl.formatMessage({ id: 'homepage.password' });
+  const confirmPassword = props.intl.formatMessage({ id: 'homepage.confirmPassword' });
+  const yourFirstName = props.intl.formatMessage({ id: 'homepage.yourFirstName' });
+  const firstName = props.intl.formatMessage({ id: 'profile.firstName' });
+  const lastName = props.intl.formatMessage({ id: 'profile.lastName' });
+  const yourLastName = props.intl.formatMessage({ id: 'homepage.yourLastName' });
+  const alreadyMember = props.intl.formatMessage({ id: 'homepage.alreadyMember' });
+  const next = props.intl.formatMessage({ id: 'general.next' });
 
   return (
     <div>
@@ -90,11 +91,19 @@ const SignupComponent = (props) => {
           <RaisedButton className="homepage-submit" type="submit" name="submit" label={next} />
           <br /><br />
           <Link to="/signin" className="homepage-linkto">{alreadyMember}</Link>
+          <Dialog
+            preview={props.preview}
+            handleUpload={props.handleUpload}
+            handleSubmit={props.handleSubmit}
+            error={props.errorPic}
+            status={props.status}
+            file={props.file}
+          />
         </form>
       </div>
     </div>
   );
-};
+}
 
 
 SignupComponent.PropTypes = {
@@ -103,4 +112,4 @@ SignupComponent.PropTypes = {
   error: PropTypes.array.required,
 };
 
-export default SignupComponent;
+export default injectIntl(SignupComponent);
