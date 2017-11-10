@@ -32,9 +32,7 @@ exports.local = async (req, res, next) => {
  * Sign in using Facebook.
  */
 exports.facebook = async (req, res, next) => {
-  console.log(req);
   passport.authenticate('facebook', { callbackURL: req.headers.referer }, (err, user, info) => {
-    console.log(req, res, info);
     if (err) { return next(err); }
     if (!user) {
       return res.send({ error: info });

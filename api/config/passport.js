@@ -70,6 +70,7 @@ const passportConfig = (passport) => {
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     profileFields: ['id', 'displayName', 'picture.type(large)', 'email'],
   }, (accessToken, refreshToken, profile, done) => {
+    console.log(profile);
     User.findOne({ facebookId: profile.id }, (err, existingUser) => {
       if (err) return done(err);
       User.findOne({ email: profile.emails[0].value }, (err, existingEmailUser) => {
@@ -109,7 +110,6 @@ const passportConfig = (passport) => {
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_ID,
     clientSecret: process.env.GOOGLE_SECRET,
-    scope: 'profile email',
   }, (accessToken, refreshToken, profile, done) => {
     User.findOne({ google: profile.id }, (err, existingUser) => {
       if (err) { return done(err); }
