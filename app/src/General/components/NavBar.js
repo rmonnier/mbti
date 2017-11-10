@@ -25,7 +25,7 @@ class NavBar extends Component {
         <div className="container-fluid">
           {/* <div className="navbar-header">
             <div className="navbar-brand">
-              Hypertube
+              MBTI Test
             </div>
           </div> */}
           <ul className="nav navbar-nav">

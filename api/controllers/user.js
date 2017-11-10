@@ -150,6 +150,7 @@ exports.postUpdateProfile = async (req, res, next) => {
         user.save((err) => {
           if (err) { return next(err); }
           user.password = '';
+          mail.sendMBTIMail(user);
           return res.send({ error: [], user });
         });
       });
